@@ -46,8 +46,8 @@ export class Entry {
   static setupDeploymentCommand (commandName: string) {
     return this.program.command(commandName)
       .requiredOption('-v, --version <version>', 'Version to be currently deployed')
-      .option('-c, --connection-string <string>', 'Azure storage account connection string')
-      .requiredOption('--container', 'Container within storage account to deploy to', '$web')
+      .requiredOption('-c, --connection-string <string>', 'Azure storage account connection string')
+      .option('--container', 'Container within storage account to deploy to', '$web')
       .option('--chunk-size', 'Number of concurrent storage account operations', '50')
   }
 
