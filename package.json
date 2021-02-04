@@ -1,15 +1,16 @@
 {
-  "name": "@simplee/ui-deployment",
-  "version": "1.1.0",
+  "name": "@simpleer/ui-deployment",
+  "version": "0.0.0-alpha",
+  "license": "MIT",
+  "private": false,
   "peerDependencies": {
     "@angular/cli": "^11.1.2"
   },
   "bin": {
-    "yc-deploy": "dist/index.js"
+    "simplee-deploy": "dist/cli"
   },
   "scripts": {
-    "build": "tsc",
-    "prepublish": "npm version minor; npm run build"
+    "build": "tsc"
   },
   "dependencies": {
     "@types/lodash": "^4.14.168",
