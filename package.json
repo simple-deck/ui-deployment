@@ -12,8 +12,7 @@
   "scripts": {
     "setup": "cat gitlab.npmrc > .npmrc && echo \"//gitlab.jteq.dev/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}\" >> .npmrc",
     "build": "tsc",
-    "postbuild": "cp src/cli dist/cli",
-    "prepublish": "npm version patch && git push --tags origin HEAD:master"
+    "postbuild": "cp src/cli dist/cli"
   },
   "dependencies": {
     "@types/lodash": "^4.14.168",
