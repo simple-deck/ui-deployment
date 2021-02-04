@@ -1,6 +1,6 @@
 {
   "name": "@simpleer/ui-deployment",
-  "version": "0.0.2-alpha",
+  "version": "0.0.3-alpha",
   "license": "MIT",
   "private": false,
   "peerDependencies": {
@@ -11,7 +11,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "postbuild": "cp src/cli dist/cli"
+    "postbuild": "cp src/cli dist/cli",
+    "prepublish": "npm version patch && git push --tags origin master"
   },
   "dependencies": {
     "@types/lodash": "^4.14.168",
