@@ -6,6 +6,8 @@ stages:
 deploy:
   stage: deploy
   script:
+    - git config --global user.email gitlab@jteq.dev
+    - git config --global user.name Gitlab
     - cat gitlab.npmrc > .npmrc
     - echo "//gitlab.jteq.dev/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - yarn
