@@ -1,6 +1,6 @@
 {
   "name": "@simpleer/ui-deployment",
-  "version": "0.0.0-alpha",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "private": false,
   "peerDependencies": {
@@ -10,7 +10,8 @@
     "simplee-deploy": "dist/cli"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "postbuild": "cp src/cli dist/cli"
   },
   "dependencies": {
     "@types/lodash": "^4.14.168",
