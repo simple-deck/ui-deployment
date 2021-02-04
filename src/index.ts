@@ -53,5 +53,6 @@ export class Entry {
 
   static init () {
     this.setupOptions();
+    this.program.parse();
   }
 }

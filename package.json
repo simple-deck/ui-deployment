@@ -7,7 +7,7 @@
     "@angular/cli": "^11.1.2"
   },
   "bin": {
-    "simplee-deploy": "dist/cli"
+    "simpleer-deploy": "dist/cli"
   },
   "scripts": {
     "build": "tsc",
