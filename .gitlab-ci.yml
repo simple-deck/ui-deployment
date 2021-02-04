@@ -6,7 +6,8 @@ stages:
 deploy:
   stage: deploy
   script:
-    - echo "//gitlab.jteq.dev/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">.npmrc
+    - cat gitlab.npmrc > .npmrc
+    - echo "//gitlab.jteq.dev/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - yarn
     - npm run build
     - npm publish
