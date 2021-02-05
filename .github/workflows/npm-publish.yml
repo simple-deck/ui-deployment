@@ -18,6 +18,8 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: yarn ci
+      - run: git config --global user.email "github@jteq.dev"
+      - run: git config --global user.name "Github"
       - run: yarn publish --access=public --patch
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
