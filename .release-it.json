@@ -6,7 +6,7 @@
   "git": {
     "requireUpstream": false
   },
-  "gitlab": {
+  "github": {
     "release": true
   }
 }
