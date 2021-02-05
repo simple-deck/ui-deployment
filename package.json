@@ -3,14 +3,16 @@
   "version": "0.0.8",
   "license": "MIT",
   "private": false,
-  "peerDependencies": {
-    "@angular/cli": "^11.1.2"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dead-simpleer/ui-deployment.git"
   },
   "bin": {
     "simpleer-deploy": "dist/cli"
   },
   "scripts": {
-    "setup": "cat gitlab.npmrc > .npmrc && echo \"//gitlab.jteq.dev/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}\" >> .npmrc",
+    "preci": "yarn",
+    "ci": "npm run build",
     "build": "tsc",
     "postbuild": "cp src/cli dist/cli"
   },
