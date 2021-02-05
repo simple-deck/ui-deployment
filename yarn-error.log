@@ -1,5 +1,5 @@
 Arguments: 
-  /home/johns/.nvm/versions/node/v14.15.3/bin/node /home/johns/.nvm/versions/node/v14.15.3/bin/yarn init
+  /home/johns/.nvm/versions/node/v14.15.3/bin/node /home/johns/.nvm/versions/node/v14.15.3/bin/yarn publish --h
 
 PATH: 
   /home/johns/.vscode-server/bin/ea3859d4ba2f3e577a159bc91e3074c5d85c0523/bin:/home/johns/.nvm/versions/node/v14.15.3/bin:/home/johns/.vscode-server/bin/ea3859d4ba2f3e577a159bc91e3074c5d85c0523/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/johns/.yarn/bin:/home/johns/.yarn/bin
@@ -14,15 +14,49 @@ Platform:
   linux x64
 
 Trace: 
-  SyntaxError: /home/johns/Projects/Work/deployment/package.json: Unexpected end of JSON input
-      at JSON.parse (<anonymous>)
-      at /home/johns/.nvm/versions/node/v14.15.3/lib/node_modules/yarn/lib/cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (/home/johns/.nvm/versions/node/v14.15.3/lib/node_modules/yarn/lib/cli.js:310:30)
-      at /home/johns/.nvm/versions/node/v14.15.3/lib/node_modules/yarn/lib/cli.js:321:13
+  Error: canceled
+      at Interface.<anonymous> (/home/johns/.nvm/versions/node/v14.15.3/lib/node_modules/yarn/lib/cli.js:136216:13)
+      at Interface.emit (events.js:315:20)
+      at Interface._ttyWrite (readline.js:875:16)
+      at ReadStream.onkeypress (readline.js:213:10)
+      at ReadStream.emit (events.js:315:20)
+      at emitKeys (internal/readline/utils.js:345:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1144:36)
+      at ReadStream.emit (events.js:315:20)
+      at addChunk (internal/streams/readable.js:309:12)
 
 npm manifest: 
-  
+  {
+    "name": "@simpleer/ui-deployment",
+    "version": "0.0.8",
+    "license": "MIT",
+    "private": false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/dead-simpleer/ui-deployment.git"
+    },
+    "bin": {
+      "simpleer-deploy": "dist/cli"
+    },
+    "scripts": {
+      "preci": "yarn",
+      "ci": "npm run build",
+      "build": "tsc",
+      "postbuild": "cp src/cli dist/cli"
+    },
+    "dependencies": {
+      "@types/lodash": "^4.14.168",
+      "@types/mime-types": "^2.1.0",
+      "@types/node": "^14.14.22",
+      "azure-storage": "^2.10.3",
+      "commander": "^7.0.0",
+      "lodash": "^4.17.20",
+      "mime-types": "^2.1.28",
+      "ts-node": "^9.1.1",
+      "typescript": "^4.1.2"
+    }
+  }
 
 yarn manifest: 
   No manifest
