@@ -1,30 +1,111 @@
 {
-  "name": "@simpleer/ui-deployment",
-  "version": "0.0.11",
+  "name": "@simple-deck/ui-deployment",
+  "version": "1.1.1",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/dead-simpleer/ui-deployment.git"
+    "url": "https://github.com/simple-deck/ui-deployment.git"
   },
   "bin": {
-    "simpleer-deploy": "dist/cli"
+    "sd-deploy": "cli"
   },
   "scripts": {
-    "preci": "yarn",
-    "ci": "npm run build",
     "build": "tsc",
-    "postbuild": "cp src/cli dist/cli"
+    "prebuild": "rm -rf dist",
+    "prerelease": "npm run prep-package",
+    "release": "semantic-release",
+    "postbuild": "cp src/cli dist/cli; npm run prep-package",
+    "copy-markdown": "cp CHANGELOG.md dist; cp README.md dist;",
+    "lint": "eslint",
+    "prep-package": "node bin/prep-package.js"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.168",
-    "@types/mime-types": "^2.1.0",
-    "@types/node": "^14.14.22",
     "azure-storage": "^2.10.3",
     "commander": "^7.0.0",
-    "lodash": "^4.17.20",
-    "mime-types": "^2.1.28",
+    "lodash.chunk": "^4.2.0",
+    "mime-types": "^2.1.28"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.2.0",
+    "@types/jest": "^26.0.20",
+    "@types/lodash.chunk": "^4.2.6",
+    "@types/mime-types": "^2.1.0",
+    "@types/node": "^14.14.22",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "eslint": "^7.19.0",
+    "husky": "^5.0.9",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.4",
+    "semantic-release": "^17.3.8",
+    "ts-jest": "^26.5.1",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix"
+  },
+  "release": {
+    "branches": [
+      {
+        "name": "master"
+      }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ],
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "npm run copy-markdown"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "dist"
+        }
+      ],
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "npm version ${nextRelease.version} --no-git-tag-version"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json",
+            "package-lock.json"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]"
+        }
+      ]
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
