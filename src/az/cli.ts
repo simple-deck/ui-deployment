@@ -56,6 +56,6 @@ export class AzDeploymentCli {
       .option('--chunk-size <number>', 'Number of concurrent storage account operations', '50')
       .option('--retries <number>', 'Number of attempts on operation failure', '3')
       .option('--max-pages <number>', 'Number of pages loaded for cleanup', '50')
-      .option('--dry-run', 'Do not perform uploads or deletes', false)
+      .option('--dry-run', 'Do not perform uploads or deletes', false);
   }
 }

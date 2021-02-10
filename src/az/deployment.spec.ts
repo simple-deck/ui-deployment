@@ -1,14 +1,12 @@
-import chunk from 'lodash.chunk';
-import { AzDeploymentCli } from './cli';
 import { AZDeploymentManager } from './deployment';
 
 
 describe('AZ Deployment', () => {
   let currentVersion = '';
-  let container = '';
-  let chunkSize = 5;
-  let numberOfRetries = 3;
-  let maxPages = 5;
+  const container = '';
+  const chunkSize = 5;
+  const numberOfRetries = 3;
+  const maxPages = 5;
 
   function getMockedManager () {
     const manager = new AZDeploymentManager(

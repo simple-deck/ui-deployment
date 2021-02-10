@@ -17,7 +17,7 @@
     "release": "semantic-release",
     "postbuild": "cp src/cli dist/cli; npm run prep-package;",
     "copy-markdown": "cp CHANGELOG.md dist; cp README.md dist;",
-    "lint": "eslint",
+    "lint": "eslint ./src/ --ext .ts",
     "prep-package": "node bin/prep-package.js",
     "test": "jest"
   },

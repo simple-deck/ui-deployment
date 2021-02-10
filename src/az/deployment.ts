@@ -4,6 +4,8 @@ import chunk from 'lodash.chunk';
 import * as mime from 'mime-types';
 import { join, resolve } from 'path';
 import { promisify } from 'util';
+
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type AccessibleStatePropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T];
 
 export interface StorageEntry {
@@ -33,7 +35,12 @@ export class AZDeploymentManager {
   ) {
   }
 
-  async init (connectionString: string) {
+  /**
+   * Sets up blob service and gets commands ready
+   *
+   * @param connectionString Azure Storage connection string
+   */
+  init (connectionString: string): void {
     this.blobService = new storage.BlobService(connectionString);
     this.blobService.parallelOperationThreadCount = this.chunkSize;
   }
@@ -42,7 +49,7 @@ export class AZDeploymentManager {
    * Uploads a directory to `currentVersion`
    * @param localLocation Absolute path to the directory being uploaded
    */
-  async deploy (localLocation: string) {
+  async deploy (localLocation: string): Promise<void> {
     this.log('starting cleanup for ' + this.currentVersion, ' at ' + localLocation);
 
     const filesToLoad = this.buildUpFileList(localLocation);
@@ -65,7 +72,7 @@ export class AZDeploymentManager {
    * 
    * e.g. current version is 1.5.20, this will remove 1.0.0 - 1.5.19
    */
-  async cleanup () {
+  async cleanup (): Promise<void> {
     const start = Date.now();
     this.log('starting cleanup for ' + this.currentVersion);
 
@@ -84,7 +91,7 @@ export class AZDeploymentManager {
     const cleanupResult = await this.performCleanup(
       filesToBeRemoved
     );
-    this.log('Failed files:')
+    this.log('Failed files:');
     this.log(cleanupResult.failedFiles);
     const actionSuffix = this.dryRun ? 'Would have' : 'Successfully';
     console.log(`
@@ -151,7 +158,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
       ];
 
       if (isNaN(mappedVersion[1])) {
-        throw new Error('Invalid version ' + version + '. must be <branch_string>.<build_int>')
+        throw new Error('Invalid version ' + version + '. must be <branch_string>.<build_int>');
       }
     } else if (chunks.length === 3) {
       mappedVersion = [
@@ -161,7 +168,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
       ];
 
       if (mappedVersion.some(mappedVersionChunk => isNaN(mappedVersionChunk))) {
-        throw new Error('Invalid version ' + version + '. must be <major_int>.<minor_int>.<patch_int>')
+        throw new Error('Invalid version ' + version + '. must be <major_int>.<minor_int>.<patch_int>');
       }
     }
 
@@ -231,7 +238,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
   }
 
   private validateMajorVersionChunks (
-    version: any[]
+    version: (string|number)[]
   ): version is [number, number, number] {
     if (version.length === 3) {
       return true;
@@ -243,7 +250,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
   private async performCleanup (filesToBeRemoved: StorageEntry[]) {
     let totalDeletedBytes = 0;
     let totalDeletedFiles = 0;
-    let failedFiles: StorageEntry[] = [];
+    const failedFiles: StorageEntry[] = [];
 
     await this.chunkedRequest(filesToBeRemoved, async (entry) => {
       try {
@@ -253,7 +260,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
       } catch (e) {
         failedFiles.push(entry);
       }
-    })
+    });
 
     return {
       totalDeletedBytes,
@@ -277,14 +284,19 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
       return undefined;
     }
 
-    await this.callBlobService<any, [container: string, blob: string, text: string | Buffer, options: storage.BlobService.CreateBlobRequestOptions], storage.BlobService.BlobResult>(
+    const file = relativeLocation.split('/').pop();
+    await this.callBlobService<
+      AccessibleStatePropertyNames<storage.BlobService>,
+      [container: string, blob: string, text: string | Buffer, options: storage.BlobService.CreateBlobRequestOptions],
+      storage.BlobService.BlobResult
+    >(
       'createBlockBlobFromText',
       this.container,
       relativeLocation,
       contents,
       {
         contentSettings: {
-          contentType: mime.lookup(relativeLocation.split('/').pop()!) || 'application/octet-stream'
+          contentType: file ? mime.lookup(file) || 'application/octet-stream' : 'application/octet-stream'
         }
       }
     );
@@ -298,13 +310,22 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
       results: StorageEntry[]
     ): Promise<StorageEntry[]> => {
       this.log(`loading page ${++pageNumber} of existing files`);
-      const segment = await this.callBlobService(
-        'listBlobsSegmentedWithPrefix',
-        this.container,
-        folderName,
-        continuationToken!,
-        {}
-      );
+      const segment = await (continuationToken ?
+        this.callBlobService(
+          'listBlobsSegmentedWithPrefix',
+          this.container,
+          folderName,
+          continuationToken,
+          {}
+        ) : this.callBlobService<
+          AccessibleStatePropertyNames<storage.BlobService>,
+          [container: string, folder: string],
+          storage.BlobService.ListBlobsResult
+        >(
+          'listBlobsSegmentedWithPrefix',
+          this.container,
+          folderName
+        ));
 
       results = [
         ...results,
@@ -325,7 +346,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
       this.log(`loaded ${pageNumber} pages`);
 
       return results;
-    }
+    };
 
     return doLoadSegment(null, 0, []);
   }
@@ -387,8 +408,13 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
   }
   
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Callback<T> = (err: Error, arg: T) => any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type FnWithCallback<P extends any[], T> = (...args: [...args: P, callback: Callback<T>]) => any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PromisifyCallbackResults<T extends FnWithCallback<any[], any>> = T extends FnWithCallback<infer P, infer R> ? { Args: P; Return: R } : never;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PromisifyCallbackArgs<T extends FnWithCallback<any[], any>> = PromisifyCallbackResults<T>['Args'];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PromisifyCallbackReturn<T extends FnWithCallback<any[], any>> = PromisifyCallbackResults<T>['Return'];
