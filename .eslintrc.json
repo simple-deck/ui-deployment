@@ -1,0 +1,52 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "arrow-body-style": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "prefer-arrow/prefer-arrow-functions": "off",
+    "@typescript-eslint/member-ordering": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "@angular-eslint/no-output-on-prefix": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "no-shadow": "off",
+    "@typescript-eslint/consistent-type-definitions": "error",
+    "@typescript-eslint/dot-notation": "off",
+    "@typescript-eslint/explicit-member-accessibility": [
+      "off",
+      {
+        "accessibility": "explicit"
+      }
+    ],
+    "@typescript-eslint/no-unused-expressions": "off",
+    "brace-style": [
+      "error",
+      "1tbs"
+    ],
+    "id-blacklist": "off",
+    "id-match": "off",
+    "max-len": [
+      "off",
+      {
+        "code": 140
+      }
+    ],
+    "no-irregular-whitespace": "error",
+    "no-underscore-dangle": "off",
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "return"
+      }
+    ],
+    "space-before-function-paren": ["error", "always"],
+    "space-in-parens": [
+      "error",
+      "never"
+    ]
+  }
+}

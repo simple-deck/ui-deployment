@@ -11,14 +11,15 @@
     "sd-deploy": "cli"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p ./tsconfig.build.json",
     "prebuild": "rm -rf dist",
     "prerelease": "npm run prep-package",
     "release": "semantic-release",
-    "postbuild": "cp src/cli dist/cli; npm run prep-package",
+    "postbuild": "cp src/cli dist/cli; npm run prep-package;",
     "copy-markdown": "cp CHANGELOG.md dist; cp README.md dist;",
     "lint": "eslint",
-    "prep-package": "node bin/prep-package.js"
+    "prep-package": "node bin/prep-package.js",
+    "test": "jest"
   },
   "dependencies": {
     "azure-storage": "^2.10.3",
