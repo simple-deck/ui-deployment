@@ -254,6 +254,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
 
     await this.chunkedRequest(filesToBeRemoved, async (entry) => {
       try {
+        this.log(`deleting ${entry.name}`);
         await this.tryDelete(entry.name);
         ++totalDeletedFiles;
         totalDeletedBytes += +entry.contentLength;
@@ -392,7 +393,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
         return result;
       } catch (e) {
         ++attempt;
-        console.warn(`Error calling ${key}. Attempt ${attempt} of ${this.numberOfRetries}`);
+        console.warn(`Error calling ${key}. Attempt ${attempt} of ${this.numberOfRetries} -- ${e.message}`);
 
         if (attempt < this.numberOfRetries) {
           return doCall();

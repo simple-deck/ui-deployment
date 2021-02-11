@@ -204,6 +204,12 @@ describe('AZ Deployment', () => {
         currentVersion
       );
 
+      it('should not include current files for this version', () => {
+        const currentVersionsIncluded = currentMajorFiles.some(file => filesToBeDeleted.some(({ name }) => file === name));
+
+        expect(currentVersionsIncluded).toBeFalsy();
+      });
+
       it('should not include future versions of this version', () => {
         const futureVersionsIncluded = [
           ...futureMinorMajorFiles,
@@ -244,6 +250,13 @@ describe('AZ Deployment', () => {
         allMappedFiles,
         currentVersion
       );
+
+      it('should not include current files for this version', () => {
+        const currentVersionsIncluded = currentMinorFiles.some(file => filesToBeDeleted.some(({ name }) => file === name));
+
+        expect(currentVersionsIncluded).toBeFalsy();
+      });
+
 
       it('should not include future versions of this version', () => {
         const futureVersionsIncluded = futureMinorFiles.some(file => filesToBeDeleted.some(({ name }) => name === file));
