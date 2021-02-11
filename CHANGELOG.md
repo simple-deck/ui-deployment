@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/simple-deck/ui-deployment/compare/v1.2.2...v1.2.3) (2021-02-11)
+
+
+### Bug Fixes
+
+* try to lint on commit ([676d2e4](https://github.com/simple-deck/ui-deployment/commit/676d2e43216f4252aba88359e8b2a90785be4066))
+
 ## [1.2.2](https://github.com/simple-deck/ui-deployment/compare/v1.2.1...v1.2.2) (2021-02-11)
 
 
