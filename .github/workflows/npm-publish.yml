@@ -22,7 +22,7 @@ jobs:
       run: npm ci
 
     # Run tests
-    - name: Test
+    - name: Lint
       run: npm run lint
 
     # Run tests
