@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/simple-deck/ui-deployment/compare/v1.2.6...v1.2.7) (2021-02-11)
+
+
+### Bug Fixes
+
+* implements max pages ([c6d4f7c](https://github.com/simple-deck/ui-deployment/commit/c6d4f7cf3afa5e5bddc6914cae409ec65e8af88e))
+
 ## [1.2.6](https://github.com/simple-deck/ui-deployment/compare/v1.2.5...v1.2.6) (2021-02-11)
 
 
