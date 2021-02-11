@@ -8,6 +8,7 @@ const newPackage = {
   license: package.license,
   repository: package.repository,
   bin: package.bin,
+  main: package.main,
   dependencies: package.dependencies
 };
 const distDirectory = resolve(__dirname, '..', 'dist');
