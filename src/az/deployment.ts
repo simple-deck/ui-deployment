@@ -333,7 +333,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
         }))
       ];
 
-      if (segment.continuationToken) {
+      if (segment.continuationToken && (pageNumber < this.maxPages)) {
         return doLoadSegment(
           segment.continuationToken,
           pageNumber,
