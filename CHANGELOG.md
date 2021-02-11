@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/simple-deck/ui-deployment/compare/v1.2.5...v1.2.6) (2021-02-11)
+
+
+### Bug Fixes
+
+* use correct arguments for list blob segment ([9578d13](https://github.com/simple-deck/ui-deployment/commit/9578d1377e39520ff456cd00dbb2ff02a52ad561))
+
 ## [1.2.5](https://github.com/simple-deck/ui-deployment/compare/v1.2.4...v1.2.5) (2021-02-11)
 
 
