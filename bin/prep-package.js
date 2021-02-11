@@ -2,6 +2,7 @@ const { writeFileSync } = require('fs');
 const { resolve } = require('path');
 const package = require('../package.json');
 const newPackage = {
+  private: package.private,
   name: package.name,
   version: package.version,
   license: package.license,
