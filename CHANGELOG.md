@@ -1,3 +1,10 @@
+## [1.2.8](https://github.com/simple-deck/ui-deployment/compare/v1.2.7...v1.2.8) (2021-02-11)
+
+
+### Bug Fixes
+
+* log error message and verbose log deleted files ([6c149d0](https://github.com/simple-deck/ui-deployment/commit/6c149d04aacc5c29695017aa08761fba44a095c0))
+
 ## [1.2.7](https://github.com/simple-deck/ui-deployment/compare/v1.2.6...v1.2.7) (2021-02-11)
 
 
