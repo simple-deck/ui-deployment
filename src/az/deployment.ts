@@ -317,14 +317,12 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
           folderName,
           continuationToken,
           {}
-        ) : this.callBlobService<
-          AccessibleStatePropertyNames<storage.BlobService>,
-          [container: string, folder: string],
-          storage.BlobService.ListBlobsResult
-        >(
+        ) : this.callBlobService(
           'listBlobsSegmentedWithPrefix',
           this.container,
-          folderName
+          folderName,
+          null as never,
+          {}
         ));
 
       results = [
