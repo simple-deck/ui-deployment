@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/simple-deck/ui-deployment/compare/v1.2.1...v1.2.2) (2021-02-11)
+
+
+### Bug Fixes
+
+* pass private through publish package ([d53d795](https://github.com/simple-deck/ui-deployment/commit/d53d795b08b52cdf87640816447ccbad45321b6b))
+
 ## [1.2.1](https://github.com/simple-deck/ui-deployment/compare/v1.2.0...v1.2.1) (2021-02-11)
 
 
