@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/simple-deck/ui-deployment/compare/v1.1.1...v1.2.0) (2021-02-11)
+
+
+### Bug Fixes
+
+* update linter rules ([286fb2b](https://github.com/simple-deck/ui-deployment/commit/286fb2b5e5faad00f9bc9b3d015413f841472280))
+
+
+### Features
+
+* get tests and linting configured ([40b3f22](https://github.com/simple-deck/ui-deployment/commit/40b3f226f11a2a4e95da583e8e58116ac109747f))
+* new badge on readme ([a5669e5](https://github.com/simple-deck/ui-deployment/commit/a5669e5b4d1d4a148053ad3eaefa195d65a2f7c0))
+
 ## [1.1.1](https://github.com/simple-deck/ui-deployment/compare/v1.1.0...v1.1.1) (2021-02-10)
 
 
