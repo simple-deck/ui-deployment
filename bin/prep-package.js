@@ -11,7 +11,7 @@ const newPackage = {
   dependencies: package.dependencies
 };
 const distDirectory = resolve(__dirname, '..', 'dist');
-
+console.log(newPackage);
 writeFileSync(
   resolve(distDirectory, 'package.json'),
   JSON.stringify(newPackage, null, '  ')
