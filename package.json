@@ -7,16 +7,16 @@
     "type": "git",
     "url": "https://github.com/simple-deck/ui-deployment.git"
   },
-  "main": "./cli",
+  "main": "./src/cli",
   "bin": {
-    "sd-deploy": "cli"
+    "sd-deploy": "./src/cli"
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json",
     "prebuild": "rm -rf dist",
     "prerelease": "npm run prep-package",
     "release": "semantic-release",
-    "postbuild": "cp src/cli dist/cli; npm run prep-package;",
+    "postbuild": "cp src/cli dist/src/cli; npm run prep-package;",
     "copy-markdown": "cp CHANGELOG.md dist; cp README.md dist;",
     "lint": "eslint ./src/ --ext .ts",
     "prep-package": "node bin/prep-package.js",
