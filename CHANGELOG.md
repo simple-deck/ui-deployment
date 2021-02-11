@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/simple-deck/ui-deployment/compare/v1.2.4...v1.2.5) (2021-02-11)
+
+
+### Bug Fixes
+
+* correctly place cli ([ac1811b](https://github.com/simple-deck/ui-deployment/commit/ac1811b8e7d0dc0b3af29d044541182514505cda))
+
 ## [1.2.4](https://github.com/simple-deck/ui-deployment/compare/v1.2.3...v1.2.4) (2021-02-11)
 
 
