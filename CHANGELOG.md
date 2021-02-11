@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/simple-deck/ui-deployment/compare/v1.2.0...v1.2.1) (2021-02-11)
+
+
+### Bug Fixes
+
+* cleanup builds ([14e5636](https://github.com/simple-deck/ui-deployment/commit/14e56361c3bba3b9ec1d4b4b16d6452a6a46b926))
+
 # [1.2.0](https://github.com/simple-deck/ui-deployment/compare/v1.1.1...v1.2.0) (2021-02-11)
 
 
