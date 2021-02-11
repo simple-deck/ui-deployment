@@ -1,3 +1,5 @@
+import { mkdirSync, rmdirSync, writeFileSync } from 'fs';
+import { resolve } from 'path';
 import { AZDeploymentManager } from './deployment';
 
 
@@ -25,6 +27,41 @@ describe('AZ Deployment', () => {
 
   beforeEach(() => {
     deploymentManager = getMockedManager();
+  });
+
+  describe('buildUpFileList', () => {
+    const root = resolve(__dirname, 'tmp');
+    beforeAll(() => {
+      mkdirSync(root);
+
+      writeFileSync(resolve(root, 'root_file'), '');
+
+      mkdirSync(resolve(root, 'nested'));
+      writeFileSync(resolve(root, 'nested', 'file'), '');
+      writeFileSync(resolve(root, 'nested', 'file_2'), '');
+      
+      mkdirSync(resolve(root, 'nested', 'nestednested'));
+      writeFileSync(resolve(root, 'nested', 'nestednested', 'file'), '');
+      writeFileSync(resolve(root, 'nested', 'nestednested', 'file_2'), '');
+    });
+
+    it('should be able to load up a directory tree', () => {
+      const fileList = deploymentManager['buildUpFileList'](root);
+
+      expect(fileList).toEqual([
+        resolve(root, 'nested', 'file'),
+        resolve(root, 'nested', 'file_2'),
+        resolve(root, 'nested', 'nestednested', 'file'),
+        resolve(root, 'nested', 'nestednested', 'file_2'),
+        resolve(root, 'root_file')
+      ]);
+    });
+
+    afterAll(() => {
+      rmdirSync(root, {
+        recursive: true
+      });
+    });
   });
 
   describe('chunkedRequest', () => {
