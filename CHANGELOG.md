@@ -1,3 +1,10 @@
+## [1.2.9](https://github.com/simple-deck/ui-deployment/compare/v1.2.8...v1.2.9) (2021-02-25)
+
+
+### Bug Fixes
+
+* **az:** dash-case current version arg ([3db30a8](https://github.com/simple-deck/ui-deployment/commit/3db30a8679fe20dcebd20fdb96d1f6eae3a0c84f))
+
 ## [1.2.8](https://github.com/simple-deck/ui-deployment/compare/v1.2.7...v1.2.8) (2021-02-11)
 
 
