@@ -49,7 +49,7 @@ export class AzDeploymentCli {
 
   private setupDeploymentCommand (commandName: string) {
     return this.command.command(commandName)
-      .requiredOption('--currentVersion <version>', 'Version to be currently deployed')
+      .requiredOption('--current-version <version>', 'Version to be currently deployed')
       .requiredOption('--connection-string <string>', 'Azure storage account connection string')
       .option('--verbose', 'Enable verbose logging', false)
       .option('--container', 'Container within storage account to deploy to', '$web')
