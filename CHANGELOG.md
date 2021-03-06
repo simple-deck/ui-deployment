@@ -1,3 +1,11 @@
+## [1.2.13](https://github.com/simple-deck/ui-deployment/compare/v1.2.12...v1.2.13) (2021-03-06)
+
+
+### Bug Fixes
+
+* **az:** :mute: remove log on file list builder ([48be584](https://github.com/simple-deck/ui-deployment/commit/48be584cccbc9372dbd611e30c87090b5555e15e))
+* force default container ([8fba64d](https://github.com/simple-deck/ui-deployment/commit/8fba64d8d81ab4348af5bd3019fd46c5c715fba0))
+
 ## [1.2.12](https://github.com/simple-deck/ui-deployment/compare/v1.2.11...v1.2.12) (2021-03-06)
 
 
