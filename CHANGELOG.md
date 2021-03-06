@@ -1,3 +1,10 @@
+## [1.2.11](https://github.com/simple-deck/ui-deployment/compare/v1.2.10...v1.2.11) (2021-03-06)
+
+
+### Bug Fixes
+
+* add windows test ([8e2b1f1](https://github.com/simple-deck/ui-deployment/commit/8e2b1f18cf9971c58cdbf142adb95030341976c7))
+
 ## [1.2.10](https://github.com/simple-deck/ui-deployment/compare/v1.2.9...v1.2.10) (2021-03-06)
 
 
