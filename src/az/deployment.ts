@@ -360,8 +360,6 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
         const stats = fs.statSync(fileName);
 
         if (stats.isFile()) {
-          console.log(stats.isSymbolicLink(), fileName);
-
           return [
             ...acc,
             fileName
