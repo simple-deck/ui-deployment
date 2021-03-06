@@ -1,5 +1,6 @@
 {
   "conventionalCommits.scopes": [
     "az"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

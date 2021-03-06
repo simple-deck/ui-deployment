@@ -1,5 +1,5 @@
 import { mkdirSync, rmdirSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
+import { join, resolve } from 'path';
 import { AZDeploymentManager } from './deployment';
 
 
@@ -24,43 +24,56 @@ describe('AZ Deployment', () => {
   }
 
   let deploymentManager: AZDeploymentManager = getMockedManager();
-
+  const root = resolve(__dirname, 'tmp');
+  const allMockFiles = [
+    join('nested', 'file'),
+    join('nested', 'file_2'),
+    join('nested', 'nestednested', 'file'),
+    join('nested', 'nestednested', 'file_2'),
+    'root_file'
+  ];
   beforeEach(() => {
     deploymentManager = getMockedManager();
   });
 
-  describe('buildUpFileList', () => {
-    const root = resolve(__dirname, 'tmp');
-    beforeAll(() => {
-      mkdirSync(root);
+  beforeAll(() => {
+    mkdirSync(root);
+    mkdirSync(resolve(root, 'nested'));
+    mkdirSync(resolve(root, 'nested', 'nestednested'));
+    allMockFiles.forEach(file => writeFileSync(resolve(root, file), ''));
+  });
 
-      writeFileSync(resolve(root, 'root_file'), '');
-
-      mkdirSync(resolve(root, 'nested'));
-      writeFileSync(resolve(root, 'nested', 'file'), '');
-      writeFileSync(resolve(root, 'nested', 'file_2'), '');
-      
-      mkdirSync(resolve(root, 'nested', 'nestednested'));
-      writeFileSync(resolve(root, 'nested', 'nestednested', 'file'), '');
-      writeFileSync(resolve(root, 'nested', 'nestednested', 'file_2'), '');
+  afterAll(() => {
+    rmdirSync(root, {
+      recursive: true
     });
+  });
 
+  describe('deploy', () => {
+    currentVersion = '3.2.1';
+    it('should be able to deploy files', async () => {
+      const files: string[] = [];
+      deploymentManager['tryUpload'] = async (location: string) => {
+        files.push(location);
+      };
+      const allAbsoluteFiles = allMockFiles.map(f => resolve(root, f));
+
+      const desiredContainerFileNames = allMockFiles.map(file => {
+        return join(currentVersion, file);
+      });
+
+      deploymentManager['buildUpFileList'] = () => allAbsoluteFiles;
+
+      await deploymentManager.deploy(root);
+
+      expect(files).toEqual(desiredContainerFileNames);
+    });
+  });
+
+  describe('buildUpFileList', () => {
     it('should be able to load up a directory tree', () => {
       const fileList = deploymentManager['buildUpFileList'](root);
-
-      expect(fileList).toEqual([
-        resolve(root, 'nested', 'file'),
-        resolve(root, 'nested', 'file_2'),
-        resolve(root, 'nested', 'nestednested', 'file'),
-        resolve(root, 'nested', 'nestednested', 'file_2'),
-        resolve(root, 'root_file')
-      ]);
-    });
-
-    afterAll(() => {
-      rmdirSync(root, {
-        recursive: true
-      });
+      expect(fileList).toEqual(allMockFiles.map(file => resolve(root, file)));
     });
   });
 

@@ -2,7 +2,7 @@ import * as storage from 'azure-storage';
 import * as fs from 'fs';
 import chunk from 'lodash.chunk';
 import * as mime from 'mime-types';
-import { join, resolve } from 'path';
+import { join, resolve, sep } from 'path';
 import { promisify } from 'util';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -50,14 +50,15 @@ export class AZDeploymentManager {
    * @param localLocation Absolute path to the directory being uploaded
    */
   async deploy (localLocation: string): Promise<void> {
-    this.log('starting cleanup for ' + this.currentVersion, ' at ' + localLocation);
+    const resolvedLocation = resolve(localLocation);
+    this.log('starting deployment for ' + this.currentVersion, ' at ' + resolvedLocation);
 
-    const filesToLoad = this.buildUpFileList(localLocation);
+    const filesToLoad = this.buildUpFileList(resolvedLocation);
 
     await this.chunkedRequest(filesToLoad, async (fileToLoad) => {
       const contents = fs.readFileSync(fileToLoad);
-      let relativeLocation = join(this.currentVersion, fileToLoad.replace(localLocation, '/'));
-      if (relativeLocation.startsWith('/')) {
+      let relativeLocation = join(this.currentVersion, fileToLoad.replace(resolvedLocation, sep));
+      if (relativeLocation.startsWith(sep)) {
         relativeLocation = relativeLocation.slice(1);
       }
       this.log('uploading', relativeLocation, 'to', this.container);
@@ -190,7 +191,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
     ent: { name: string },
     [branch, patch]: [string, number]
   ) {
-        // version is inferred from the folder it is in
+    // version is inferred from the folder it is in
     const fileVersion = ent.name.split('/')[0];
 
     const [fileBranch, filePatch, ...otherChunks] = fileVersion.split('.');
@@ -285,7 +286,7 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
       return undefined;
     }
 
-    const file = relativeLocation.split('/').pop();
+    const file = relativeLocation.split(sep).pop();
     await this.callBlobService<
       AccessibleStatePropertyNames<storage.BlobService>,
       [container: string, blob: string, text: string | Buffer, options: storage.BlobService.CreateBlobRequestOptions],
@@ -357,8 +358,10 @@ ${cleanupResult.failedFiles.length || 'No'} files failed to be removed.`
       .reduce<string[]>((acc, file) => {
         const fileName = resolve(root, file);
         const stats = fs.statSync(fileName);
-  
+
         if (stats.isFile()) {
+          console.log(stats.isSymbolicLink(), fileName);
+
           return [
             ...acc,
             fileName
