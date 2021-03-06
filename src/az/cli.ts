@@ -13,7 +13,7 @@ export class AzDeploymentCli {
   private setupDeployment (opts: OptionValues) {
     const manager = new AZDeploymentManager(
       opts.currentVersion,
-      opts.container,
+      opts.container || '$web',
       opts.verbose,
       +opts.chunkSize,
       +opts.retries,
