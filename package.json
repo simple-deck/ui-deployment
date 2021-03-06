@@ -1,6 +1,6 @@
 {
   "name": "@simple-deck/ui-deployment",
-  "version": "1.2.11",
+  "version": "1.2.9",
   "license": "MIT",
   "private": false,
   "repository": {
@@ -82,6 +82,12 @@
       ],
       [
         "@semantic-release/npm",
+        {
+          "pkgRoot": "dist"
+        }
+      ],
+      [
+        "@semantic-release/github",
         {
           "pkgRoot": "dist"
         }
